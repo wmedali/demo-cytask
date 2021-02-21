@@ -34,11 +34,12 @@ function signup(email, motdepasse) {
         'username': email,
         'password': motdepasse
       }).then(res => {
-        let status = res.status
-        let body = res.data
-        if (res.status === 200 && body === "") resolve('User created')
-        else resolve('User already exists')
-        
+        if(res.data === "") {
+          resolve('User created')
+        } 
+        else if (res.data.errorMessage != undefined && res.data.errorMessage === "This user already exist.") {
+          resolve('User already exists')
+        }
       })
   })
 }
